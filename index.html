@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nation Project</title>
+
+<style>
+:root{
+    --green-main:#16c47f;
+    --green-dark:#0f9d58;
+    --bg-soft:#f7fbf9;
+}
+
+.overlay{
+    position: fixed;
+    inset: 0; /* lebih clean dari width & height */
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(3px); /* optional modern effect */
+    z-index: 998;
+    display: none;
+}
+
+.side-menu{
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 260px;
+    height: 100%;
+    background: white;
+    z-index: 999; /* HARUS lebih tinggi dari overlay */
+}
+
+.overlay.active{
+    display: block;
+}
+
+.side-menu.active{
+    right: 0;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:var(--bg-soft);
+    color:#222;
+    overflow-x:hidden;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    background:linear-gradient(135deg,var(--green-main),var(--green-dark));
+    padding:90px 20px 120px;
+    text-align:center;
+    position:relative;
+    border-bottom-left-radius:60px;
+    border-bottom-right-radius:60px;
+}
+
+.hero img{
+    width:230px;
+    filter:drop-shadow(0 15px 30px rgba(0,0,0,0.25));
+    animation:float 4s ease-in-out infinite;
+}
+
+.hero h1{
+    color:white;
+    font-size:42px;
+    margin-top:25px;
+}
+
+.hero p{
+    color:#eafff6;
+    font-size:20px;
+    margin-top:10px;
+}
+
+/* floating animation */
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-12px);}
+}
+
+/* ================= MENU ================= */
+
+.menu-btn{
+    position:absolute;
+    top:25px;
+    right:25px;
+    font-size:30px;
+    color:white;
+    cursor:pointer;
+}
+
+.side-menu{
+    position:fixed;
+    right:-260px;
+    top:0;
+    width:260px;
+    height:100%;
+    background:white;
+    padding:60px 30px;
+    box-shadow:-5px 0 20px rgba(0,0,0,0.2);
+    transition:0.4s;
+    z-index:1000;
+    border-top-left-radius:30px;
+    border-bottom-left-radius:30px;
+}
+
+.side-menu.active{
+    right:0;
+}
+
+.side-menu a{
+    display:block;
+    margin-bottom:25px;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:600;
+    color:var(--green-dark);
+    transition:0.3s;
+}
+
+.side-menu a:hover{
+    transform:translateX(6px);
+}
+
+.overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.3);
+    top:0;
+    left:0;
+    display:none;
+}
+
+.overlay.active{
+    display:block;
+}
+
+/* ================= CONTENT ================= */
+
+.container{
+    max-width:1000px;
+    margin:-70px auto 80px;
+    padding:0 20px;
+}
+
+.card{
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    margin-bottom:40px;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card h2{
+    color:var(--green-dark);
+    margin-bottom:20px;
+    font-size:28px;
+}
+
+.card h3{
+    color:var(--black);
+    margin-bottom:23px;
+    font-size:23px;
+}
+
+.card p{
+    line-height:1.8;
+    font-size:17px;
+    margin-bottom:15px;
+}
+
+/* ================= COMMUNITY ================= */
+
+.community{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.community a{
+    display:flex;
+    align-items:center;
+    padding:18px 25px;
+    border-radius:20px;
+    background:linear-gradient(135deg,#ffffff,#f1fdf8);
+    box-shadow:0 6px 20px rgba(0,0,0,0.06);
+    text-decoration:none;
+    color:#222;
+    transition:0.3s;
+}
+
+.community a:hover{
+    transform:scale(1.03);
+}
+
+.community img{
+    width:40px;
+    margin-right:15px;
+}
+
+/* ================= SCROLL ANIMATION ================= */
+
+.fade{
+    opacity:0;
+    transform:translateY(40px);
+    transition:0.8s ease;
+}
+
+.fade.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:600px){
+    .hero h1{font-size:30px;}
+    .hero img{width:160px;}
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+    <div class="menu-btn" onclick="openMenu()">☰</div>
+
+    <img src="https://i.postimg.cc/8cy4y7xd/Background-Eraser-20260226-213603759.png" alt="Nation Project Logo">
+    <h1>Trushcore id</h1>
+    <p>Komunitas Developer & Programmer Modern</p>
+</div>
+
+<div class="side-menu" id="menu">
+    <a href="https://sociabuzz.com/xyhackcommunitydonate/tribe" target="_blank">Donate</a>
+    <a href="mailto:siwannndevofficial@gmail.com">Saran & Kritik</a>
+</div>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<div class="container">
+
+    <div class="card fade">
+        <h2>Tentang Kami</h2>
+        <p>Kami adalah komunitas para pengembang dan programmer untuk berbagi ilmu, belajar bersama, serta membangun proyek digital seperti aplikasi dan solusi teknologi lainnya.</p>
+        <p>Komunitas ini didirikan oleh Wann saat berusia 12 tahun sebagai wadah kolaborasi positif bagi developer muda maupun profesional. Jika ingin bergabung, silakan gulir ke bawah dan temukan komunitas kami.</p>
+    </div>
+
+    <div class="card fade">
+        <h2>Tujuan Kami</h2>
+        <p>Komunitas Trushcore bertujuan menjadi ruang berkembang bagi programmer pemula hingga profesional untuk meningkatkan pengalaman, membangun relasi, serta menciptakan karya nyata.</p>
+        <p>Kami percaya kolaborasi dan konsistensi adalah kunci untuk membangun generasi digital yang inovatif dan berintegritas. ingin bergabung atau ingin melihat perkembangan proyek kami? silahkan scroll ke bawah ya.</p>
+    </div>
+    
+    <div class="card fade">
+        <h2>visi & misi</h2>
+        <h3>visi</h3>
+        <p>Trushcore memiliki visi untuk menjadi komunitas teknologi yang progresif, kolaboratif, dan berdampak nyata dalam membangun generasi digital yang kompeten, kreatif, serta berintegritas. Kami bercita-cita menghadirkan ruang belajar yang terbuka dan inklusif bagi siapa pun yang memiliki semangat untuk berkembang di bidang pemrograman dan pengembangan teknologi. Dalam menghadapi era transformasi digital yang terus bergerak cepat, kami ingin menjadi wadah yang tidak hanya mengikuti perkembangan zaman, tetapi juga mampu berkontribusi melalui inovasi dan karya nyata.
+Kami percaya bahwa teknologi bukan sekadar alat, melainkan sarana untuk menciptakan solusi, membuka peluang, dan membangun masa depan yang lebih baik. Oleh karena itu, visi kami tidak hanya berfokus pada peningkatan keterampilan teknis, tetapi juga pada pembentukan karakter, etika, dan tanggung jawab dalam penggunaan teknologi secara bijak dan bermanfaat bagi masyarakat luas.</p>
+      <h3>misi</h3>
+      <p>Trushcore berkomitmen untuk menciptakan lingkungan yang mendukung proses belajar yang berkelanjutan, kolaboratif, dan inspiratif bagi seluruh anggota komunitas. Kami ingin membangun budaya berbagi pengetahuan, diskusi terbuka, serta kerja sama dalam pengembangan proyek-proyek digital yang relevan dengan kebutuhan zaman. Melalui interaksi yang positif dan konstruktif, kami mendorong setiap anggota untuk berani mencoba, bereksperimen, serta terus meningkatkan kualitas diri.
+Kami juga berupaya memperluas wawasan anggota terhadap perkembangan teknologi terbaru, baik dalam bidang pengembangan aplikasi, sistem, keamanan digital, maupun inovasi berbasis internet. Dalam setiap aktivitas yang dilakukan, kami menanamkan nilai integritas, profesionalisme, serta semangat untuk terus berkembang tanpa melupakan etika dan tanggung jawab sosial.
+Lebih dari sekadar komunitas, Trushcore ingin menjadi rumah bagi para pengembang yang memiliki tekad untuk tumbuh bersama, membangun karya bersama, dan menciptakan dampak positif melalui teknologi. Kami percaya bahwa kolaborasi yang kuat dan konsisten akan melahirkan generasi programmer yang tidak hanya cerdas secara teknis, tetapi juga matang secara pola pikir dan sikap profesional.</p>
+    </div>
+
+    <div class="card fade">
+        <h2>Gabung Komunitas</h2>
+        <div class="community">
+            <a href="https://whatsapp.com/channel/0029VbCFkOSG3R3a2wQa9z31" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
+                WhatsApp Channel
+            </a>
+
+            <a href="https://discord.gg/xQQeXy7td" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png">
+                Discord Community
+            </a>
+
+            <a href="https://vm.tiktok.com/ZS9egong2jEpL-nV5KO/" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png">
+                TikTok Community
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+function openMenu(){
+    menu.classList.add("active");
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden"; // lock scroll
+}
+
+function closeMenu(){
+    menu.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "auto";
+}
+
+function openMenu(){
+    menu.classList.add("active");
+    overlay.classList.add("active");
+}
+function closeMenu(){
+    menu.classList.remove("active");
+    overlay.classList.remove("active");
+}
+
+const fades=document.querySelectorAll(".fade");
+window.addEventListener("scroll",()=>{
+    fades.forEach(el=>{
+        if(el.getBoundingClientRect().top < window.innerHeight-100){
+            el.classList.add("show");
+        }
+    });
+});
+</script>
+
+</body>
+</html>
